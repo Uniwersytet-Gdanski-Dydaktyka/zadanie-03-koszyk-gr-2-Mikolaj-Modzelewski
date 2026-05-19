@@ -1,7 +1,8 @@
 package src.main.java.javamarkt.promotions;
 
 import src.main.java.javamarkt.model.Product;
+import java.util.List;
 
 public interface Promotion {
-    Product[] apply(Product[] products);
+    List<Product> apply(List<Product> products);
 }

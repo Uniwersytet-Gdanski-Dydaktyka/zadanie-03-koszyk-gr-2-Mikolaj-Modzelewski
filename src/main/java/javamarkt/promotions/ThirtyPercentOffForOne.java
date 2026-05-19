@@ -1,6 +1,7 @@
 package src.main.java.javamarkt.promotions;
 
 import src.main.java.javamarkt.model.Product;
+import java.util.List;
 
 public class ThirtyPercentOffForOne implements Promotion {
     private final String productCode;
@@ -10,8 +11,8 @@ public class ThirtyPercentOffForOne implements Promotion {
     }
 
     @Override
-    public Product[] apply(Product[] products) {
-        if (products == null) return null;
+    public List<Product> apply(List<Product> products) {
+        if (products == null || products.isEmpty()) return products;
 
         for (Product p : products) {
             if (p != null && p.getCode().equals(productCode)) {

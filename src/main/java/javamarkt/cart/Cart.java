@@ -2,56 +2,58 @@ package src.main.java.javamarkt.cart;
 
 import src.main.java.javamarkt.model.Product;
 import src.main.java.javamarkt.promotions.Promotion;
-import java.util.Arrays;
+
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class Cart {
-    private Product[] products = new Product[0];
+    private List<Product> products = new ArrayList<>();
 
     // Add product to cart
     public void addProduct(Product product) {
         if (product == null) return;
-        products = Arrays.copyOf(products, products.length + 1);
-        products[products.length - 1] = product;
+        products.add(product);
     }
 
     // Get cart content
-    public Product[] getProducts() {
-        return Arrays.copyOf(products, products.length);
+    public List<Product> getProducts() {
+        return new ArrayList<>(products);
     }
 
     // Get total price after discount
-    public double getTotalDiscountPrice(Product[] productArray) {
+    public double getTotalDiscountPrice(List<Product> productList) {
         double total = 0;
-        for (Product p : productArray) {
+        for (Product p : productList) {
             if (p != null) total += p.getDiscountPrice();
         }
         return total;
     }
 
-    // Get n cheapes / most expensive products
-    public Product[] getTopNProducts(Comparator<Product> comparator, int n) {
-        if (products.length == 0 || n == 0) return new Product[0];
-        if (n < 0) throw new IllegalArgumentException("n must be 0 >= 0");
-        Product[] copy = Arrays.copyOf(products, products.length);
-        Arrays.sort(copy, comparator);
+    // Get n cheapest / most expensive products
+    public List<Product> getTopNProducts(Comparator<Product> comparator, int n) {
+        if (products.isEmpty() || n == 0) return new ArrayList<>();
+        if (n < 0) throw new IllegalArgumentException("n must be >= 0");
+        
+        List<Product> copy = new ArrayList<>(products);
+        copy.sort(comparator);
 
-        int toTake = Math.min(n, copy.length);
-        return Arrays.copyOf(copy, toTake);
+        int toTake = Math.min(n, copy.size());
+        return copy.subList(0, toTake);
     }
 
     // Sort with given comparator
     public void sortProducts(Comparator<Product> comparator) {
-        if (comparator != null && products.length > 0) {
-            Arrays.sort(products, comparator);
+        if (comparator != null && !products.isEmpty()) {
+            products.sort(comparator);
         }
     }
 
     // Apply promotions sequentially
-    public Product[] applyPromotions(Promotion[] promotions) {
-        Product[] simulatedProducts = new Product[products.length];
-        for (int i = 0; i < products.length; i++) {
-            simulatedProducts[i] = new Product(products[i].getCode(), products[i].getName(), products[i].getPrice());
+    public List<Product> applyPromotions(List<Promotion> promotions) {
+        List<Product> simulatedProducts = new ArrayList<>();
+        for (Product p : products) {
+            simulatedProducts.add(new Product(p.getCode(), p.getName(), p.getPrice()));
         }
 
         for (Promotion promotion : promotions) {

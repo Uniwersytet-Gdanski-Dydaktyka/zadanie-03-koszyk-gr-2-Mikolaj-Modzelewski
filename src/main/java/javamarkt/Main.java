@@ -5,9 +5,12 @@ import src.main.java.javamarkt.cart.Comparators;
 import src.main.java.javamarkt.model.Product;
 import src.main.java.javamarkt.promotions.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        Cart cart = new Cart(); // Initialise cart
+        Cart cart = new Cart(); //Initialize cart
 
         // Add products to cart
         cart.addProduct(new Product("wnr-lsc", "WinRAR license", 250.0));
@@ -24,14 +27,14 @@ public class Main {
 
         // Apply promotions
         System.out.println("\n");
-        Promotion[] promotions = new Promotion[] {
+        List<Promotion> promotions = Arrays.asList(
                 new ThirtyPercentOffForOne("thmg-sss"),
                 new TwoPlusOne(),
                 new MoreThan200(),
                 new MoreThan300()
-        };
+        );
 
-        Product[] afterPromotions = cart.applyPromotions(promotions);
+        List<Product> afterPromotions = cart.applyPromotions(promotions);
         for (Product p : afterPromotions) {
             System.out.println(p);
         }

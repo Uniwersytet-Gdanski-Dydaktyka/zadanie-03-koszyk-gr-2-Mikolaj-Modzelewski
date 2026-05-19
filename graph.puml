@@ -2,21 +2,21 @@
 skinparam classAttributeIconSize 0
 
 interface Promotion {
-    + apply(products: Product[]): Product[]
+    + apply(products: List<Product>): List<Product>
 }
 
 class MoreThan200 implements Promotion {
-    + apply(products: Product[]): Product[]
+    + apply(products: List<Product>): List<Product>
 }
 class MoreThan300 implements Promotion {
-    + apply(products: Product[]): Product[]
+    + apply(products: List<Product>): List<Product>
 }
 class ThirtyPercentOffForOne implements Promotion {
     - productCode: String
-    + apply(products: Product[]): Product[]
+    + apply(products: List<Product>): List<Product>
 }
 class TwoPlusOne implements Promotion {
-    + apply(products: Product[]): Product[]
+    + apply(products: List<Product>): List<Product>
 }
 
 class Product {
@@ -33,13 +33,13 @@ class Product {
 }
 
 class Cart {
-    - products: Product[]
+    - products: List<Product>
     + addProduct(product: Product): void
-    + getProducts(): Product[]
-    + getTotalDiscountPrice(productArray: Product[]): double
-    + getTopNProducts(comparator: Comparator<Product>, n: int): Product[]
+    + getProducts(): List<Product>
+    + getTopNProducts(comparator: Comparator<Product>, n: int): List<Product>
     + sortProducts(comparator: Comparator<Product>): void
-    + applyPromotions(promotions: Promotion[]): Product[]
+    + applyPromotions(promotions: List<Promotion>): List<Product>
+    + getTotalDiscountPrice(productList: List<Product>): double
 }
 
 class Comparators {

@@ -1,11 +1,12 @@
 package src.main.java.javamarkt.promotions;
 
 import src.main.java.javamarkt.model.Product;
+import java.util.List;
 
 public class MoreThan300 implements Promotion {
     @Override
-    public Product[] apply(Product[] products) {
-        if (products == null || products.length == 0) return products; 
+    public List<Product> apply(List<Product> products) {
+        if (products == null || products.isEmpty()) return products; 
 
         double total = 0;
         for (Product p : products) {
