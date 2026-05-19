@@ -1,0 +1,53 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface Promotion {
+    + apply(products: Product[]): Product[]
+}
+
+class MoreThan200 implements Promotion {
+    + apply(products: Product[]): Product[]
+}
+class MoreThan300 implements Promotion {
+    + apply(products: Product[]): Product[]
+}
+class ThirtyPercentOffForOne implements Promotion {
+    - productCode: String
+    + apply(products: Product[]): Product[]
+}
+class TwoPlusOne implements Promotion {
+    + apply(products: Product[]): Product[]
+}
+
+class Product {
+    - code: String
+    - name: String
+    - price: double
+    - discountPrice: double
+    + getCode(): String
+    + getName(): String
+    + getPrice(): double
+    + getDiscountPrice(): double
+    + setDiscountPrice(discountPrice: double): void
+    + resetDiscount(): void
+}
+
+class Cart {
+    - products: Product[]
+    + addProduct(product: Product): void
+    + getProducts(): Product[]
+    + getTotalDiscountPrice(productArray: Product[]): double
+    + getTopNProducts(comparator: Comparator<Product>, n: int): Product[]
+    + sortProducts(comparator: Comparator<Product>): void
+    + applyPromotions(promotions: Promotion[]): Product[]
+}
+
+class Comparators {
+    + {static} BY_PRICE_DESC_NAME_ASC: Comparator<Product>
+    + {static} BY_PRICE_ASC: Comparator<Product>
+    + {static} BY_NAME_ASC: Comparator<Product>
+}
+
+Cart o--> Product : contains
+Cart ..> Promotion : applies
+@enduml
